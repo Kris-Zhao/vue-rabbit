@@ -1,3 +1,3 @@
 <template>
-  <div>I am home apge</div>
+  <div style="height: 2000px;">I am home apge</div>
 </template>
