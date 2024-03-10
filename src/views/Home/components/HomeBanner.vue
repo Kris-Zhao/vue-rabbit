@@ -5,7 +5,6 @@ import {onMounted, ref} from 'vue'
 const homeBannerList = ref([])
 async function getHomeBanner() {
   const res = await getHomeBannerAPI()
-  console.log(res);
   homeBannerList.value = res.result
 }
 
