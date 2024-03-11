@@ -27,3 +27,14 @@ export const getHomeHotAPI = () => {
     url: 'home/hot'
   })
 }
+
+/**
+ * @description: 获取所有商品模块
+ * @param {*}
+ * @return {*}
+ */
+export const getHomeProductAPI = () => {
+  return httpInstance({
+    url: 'home/goods'
+  })
+}
