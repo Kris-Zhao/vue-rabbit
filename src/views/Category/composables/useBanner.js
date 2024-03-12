@@ -1,7 +1,7 @@
 import { onMounted, ref } from 'vue'
 import { getHomeBannerAPI } from '@/apis/home';
 
-export default function useBanner() {
+export function useBanner() {
   // Get banner
   const homeBannerList = ref([])
   async function getHomeBanner() {

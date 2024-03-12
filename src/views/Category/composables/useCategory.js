@@ -2,7 +2,7 @@ import { getCategoryAPI } from '@/apis/category.js'
 import { onMounted, ref } from 'vue'
 import { onBeforeRouteUpdate, useRoute } from 'vue-router'
 
-export default function useCategory() {
+export function useCategory() {
   const categoryData = ref({})
   const route = useRoute()
 
