@@ -1,21 +1,23 @@
 <script setup>
 import { getCategoryAPI } from '@/apis/category.js'
-import { onMounted, onUpdated, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { onMounted, ref } from 'vue'
+import { onBeforeRouteUpdate, useRoute } from 'vue-router'
 import { getHomeBannerAPI } from '@/apis/home';
 import GoodsItem from '../Home/components/GoodsItem.vue'
 
 const categoryData = ref({})
 const route = useRoute()
 
-async function getCategory(id) {
+async function getCategory(id = route.params.id) {
   const res = await getCategoryAPI(id)
   categoryData.value = res.result
 }
 
-onMounted(() => getCategory(route.params.id))
-// TODO: only router changes, calling getCategory
-// onUpdated(() => getCategory(route.params.id))
+onMounted(() => getCategory())
+// If route changes, re-get categoryData
+onBeforeRouteUpdate((to) => {
+  getCategory(to.params.id)
+})
 
 // Get banner
 const homeBannerList = ref([])
