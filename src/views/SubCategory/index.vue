@@ -1,6 +1,6 @@
 <script setup>
 import { getCategoryFilterAPI, getSubCategoryAPI } from '@/apis/category'
-import { onMounted, ref } from 'vue';
+import { onMounted, ref} from 'vue';
 import { useRoute } from 'vue-router';
 import GoodsItem from '../Home/components/GoodsItem.vue';
 
@@ -10,7 +10,6 @@ async function getCategoryData() {
   const res = await getCategoryFilterAPI(route.params.id)
   categoryData.value = res.result
 }
-
 onMounted(() => getCategoryData())
 
 const goodsList = ref([])
@@ -21,11 +20,26 @@ const reqData = ref({
   sortField: 'publishTime'
 })
 async function getGoodsList() {
-  const res = await getSubCategoryAPI(reqData.value)
+  const res = await getSubCategoryAPI( reqData.value)
   goodsList.value = res.result.items
 }
-
 onMounted(() => getGoodsList())
+
+function tabChange() {
+  reqData.value.page = 1
+  getGoodsList()
+}
+
+const disabled = ref(false)
+async function load() {
+  reqData.value.page++
+  const res = await getSubCategoryAPI( reqData.value)
+  if(res.result.items.length !== 0) {
+    goodsList.value = [...goodsList.value,...res.result.items]
+  } else {
+    disabled.value = true
+  }
+}
 </script>
 
 <template>
@@ -41,12 +55,12 @@ onMounted(() => getGoodsList())
       </el-breadcrumb>
     </div>
     <div class="sub-container">
-      <el-tabs>
+      <el-tabs v-model="reqData.sortField" @tab-change="tabChange">
         <el-tab-pane label="最新商品" name="publishTime"></el-tab-pane>
         <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
       </el-tabs>
-      <div class="body">
+      <div class="body" v-infinite-scroll="load" :infinite-scroll-disabled="disabled">
          <GoodsItem v-for="good in goodsList" :good="good" :key="good.id"></GoodsItem>
       </div>
     </div>
