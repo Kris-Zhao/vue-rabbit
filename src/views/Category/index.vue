@@ -2,6 +2,7 @@
 import { getCategoryAPI } from '@/apis/category.js'
 import { onMounted, onUpdated, ref } from 'vue'
 import { useRoute } from 'vue-router'
+import { getHomeBannerAPI } from '@/apis/home';
 
 const categoryData = ref({})
 const route = useRoute()
@@ -14,6 +15,17 @@ async function getCategory(id) {
 onMounted(() => getCategory(route.params.id))
 // TODO: only router changes, calling getCategory
 onUpdated(() => getCategory(route.params.id))
+
+// Get banner
+const homeBannerList = ref([])
+async function getHomeBanner() {
+  const res = await getHomeBannerAPI({distributionSite: '2'})
+  homeBannerList.value = res.result
+}
+
+onMounted(() => {
+  getHomeBanner()
+})
 </script>
 
 <template>
@@ -25,6 +37,14 @@ onUpdated(() => getCategory(route.params.id))
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
           <el-breadcrumb-item>{{ categoryData.name }}</el-breadcrumb-item>
         </el-breadcrumb>
+      </div>
+      <!-- 轮播图 -->
+      <div class="home-banner">
+        <el-carousel height="500px">
+          <el-carousel-item v-for="item in homeBannerList" :key="item.id">
+            <img :src="item.imgUrl" alt="">
+          </el-carousel-item>
+        </el-carousel>
       </div>
     </div>
   </div>
@@ -106,6 +126,17 @@ onUpdated(() => getCategory(route.params.id))
 
   .bread-container {
     padding: 25px 0;
+  }
+}
+
+.home-banner {
+  width: 1240px;
+  height: 500px;
+  margin: 0 auto;
+
+  img {
+    width: 100%;
+    height: 500px;
   }
 }
 </style>
