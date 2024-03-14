@@ -1,4 +1,5 @@
 <script setup>
+import DetailHot from './components/DetailHot.vue';
 import { getDetailAPI } from '@/apis/detail'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router';
@@ -115,9 +116,12 @@ onMounted(() => getGoods())
                 </div>
               </div>
             </div>
-            <!-- 24热榜+专题推荐 -->
+            <!-- 24小时热榜+周热榜 -->
             <div class="goods-aside">
-
+              <!-- 24小时热榜 -->
+              <DetailHot :hotType="1"/>
+              <!-- 周热榜 -->
+              <DetailHot :hotType="2"/>
             </div>
           </div>
         </div>
