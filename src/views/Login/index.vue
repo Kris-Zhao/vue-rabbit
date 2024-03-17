@@ -1,9 +1,11 @@
 <script setup>
 import { ref } from 'vue';
-import { userAPI } from '@/apis/user';
 import { ElMessage } from 'element-plus'
 import 'element-plus/theme-chalk/el-message.css'
 import { useRouter } from 'vue-router';
+import { useUserStore } from '@/stores/user';
+
+const userStore = useUserStore()
 
 const form = ref({
   account: '',
@@ -38,7 +40,7 @@ const doLogin = () => {
   const {account, password} = form.value
   formRef.value.validate( async (valid) => {
     if(valid) {
-      await userAPI({account, password})
+      await userStore.getUserInfo({account, password})
       ElMessage({type: 'success', message: 'Login successful'})
       router.replace({ path: '/' })
     }
