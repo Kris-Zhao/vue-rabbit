@@ -3,7 +3,8 @@ import { ref } from 'vue';
 
 const form = ref({
   account: '',
-  password: ''
+  password: '',
+  agree: true
 })
 
 const rules = {
@@ -13,6 +14,17 @@ const rules = {
   password: [
     {required: true, message: 'The password can not be empty', trigger: 'blur'},
     {min: 6, max: 14, message: 'The password length is 6-14', trigger: 'blur'}
+  ],
+  agree: [
+    {
+      validator(rule, value, callback){
+        if (value) {
+          callback()
+        } else {
+          callback(new Error('Please check the agree box'))
+        }
+      } 
+    }
   ]
 }
 
@@ -47,8 +59,8 @@ const rules = {
               <el-form-item prop="password" label="密码">
                 <el-input v-model="form.password"/>
               </el-form-item>
-              <el-form-item label-width="22px">
-                <el-checkbox  size="large">
+              <el-form-item prop="agree" label-width="22px">
+                <el-checkbox v-model="form.agree" size="large">
                   我已同意隐私条款和服务条款
                 </el-checkbox>
               </el-form-item>
