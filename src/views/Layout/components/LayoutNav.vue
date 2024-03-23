@@ -1,5 +1,5 @@
 <script setup>
-import { useUserStore } from '@/stores/user';
+import { useUserStore } from '@/stores/userStore';
 import { useRouter } from 'vue-router';
 
 const userStore = useUserStore()
@@ -41,11 +41,13 @@ const confirm = () => {
 <style scoped lang="scss">
 .app-topnav {
   background: #333;
+
   ul {
     display: flex;
     height: 53px;
     justify-content: flex-end;
     align-items: center;
+
     li {
       a {
         padding: 0 15px;
@@ -71,4 +73,4 @@ const confirm = () => {
     }
   }
 }
-</style>
+</style>@/stores/userStore

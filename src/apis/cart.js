@@ -16,3 +16,13 @@ export const getNewCartListAPI = () => {
     url: "/member/cart",
   });
 };
+
+export const deleteCartAPI = (ids) => {
+  return httpInstance({
+    url: "/member/cart",
+    method: "DELETE",
+    data: {
+      ids,
+    },
+  });
+};

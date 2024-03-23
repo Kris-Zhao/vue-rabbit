@@ -1,9 +1,9 @@
 <script setup>
-  import { useCategoryStore } from '@/stores/category'
-  import {storeToRefs} from 'pinia'
-  import HeaderCart from './HeaderCart.vue';
+import { useCategoryStore } from '@/stores/categoryStore'
+import { storeToRefs } from 'pinia'
+import HeaderCart from './HeaderCart.vue';
 
-  const {categoryList} = storeToRefs(useCategoryStore())
+const { categoryList } = storeToRefs(useCategoryStore())
 </script>
 
 <template>
@@ -25,7 +25,7 @@
         <input type="text" placeholder="搜一搜">
       </div>
       <!-- 头部购物车 -->
-      <HeaderCart/>
+      <HeaderCart />
     </div>
   </header>
 </template>
@@ -58,24 +58,24 @@
     padding-left: 40px;
     position: relative;
     z-index: 998;
-  
+
     li {
       margin-right: 40px;
       width: 38px;
       text-align: center;
-  
+
       a {
         font-size: 16px;
         line-height: 32px;
         height: 32px;
         display: inline-block;
-  
+
         &:hover {
           color: $xtxColor;
           border-bottom: 1px solid $xtxColor;
         }
       }
-  
+
       .active {
         color: $xtxColor;
         border-bottom: 1px solid $xtxColor;
@@ -132,4 +132,4 @@
     }
   }
 }
-</style>
+</style>@/stores/categoryStore

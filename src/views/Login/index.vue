@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { ElMessage } from 'element-plus'
 import 'element-plus/theme-chalk/el-message.css'
 import { useRouter } from 'vue-router';
-import { useUserStore } from '@/stores/user';
+import { useUserStore } from '@/stores/userStore';
 
 const userStore = useUserStore()
 
@@ -15,21 +15,21 @@ const form = ref({
 
 const rules = {
   account: [
-    {required: true, message: 'The account can not be empty', trigger: 'blur'}
+    { required: true, message: 'The account can not be empty', trigger: 'blur' }
   ],
   password: [
-    {required: true, message: 'The password can not be empty', trigger: 'blur'},
-    {min: 6, max: 14, message: 'The password length is 6-14', trigger: 'blur'}
+    { required: true, message: 'The password can not be empty', trigger: 'blur' },
+    { min: 6, max: 14, message: 'The password length is 6-14', trigger: 'blur' }
   ],
   agree: [
     {
-      validator(rule, value, callback){
+      validator(rule, value, callback) {
         if (value) {
           callback()
         } else {
           callback(new Error('Please check the agree box'))
         }
-      } 
+      }
     }
   ]
 }
@@ -37,11 +37,11 @@ const rules = {
 const formRef = ref(null)
 const router = useRouter()
 const doLogin = () => {
-  const {account, password} = form.value
-  formRef.value.validate( async (valid) => {
-    if(valid) {
-      await userStore.getUserInfo({account, password})
-      ElMessage({type: 'success', message: 'Login successful'})
+  const { account, password } = form.value
+  formRef.value.validate(async (valid) => {
+    if (valid) {
+      await userStore.getUserInfo({ account, password })
+      ElMessage({ type: 'success', message: 'Login successful' })
       router.replace({ path: '/' })
     }
   })
@@ -71,10 +71,10 @@ const doLogin = () => {
           <div class="form">
             <el-form ref="formRef" :model="form" :rules="rules" label-position="right" label-width="60px" status-icon>
               <el-form-item prop="account" label="账户">
-                <el-input v-model="form.account"/>
+                <el-input v-model="form.account" />
               </el-form-item>
               <el-form-item prop="password" label="密码">
-                <el-input v-model="form.password"/>
+                <el-input v-model="form.password" />
               </el-form-item>
               <el-form-item prop="agree" label-width="22px">
                 <el-checkbox v-model="form.agree" size="large">
@@ -331,4 +331,4 @@ const doLogin = () => {
   width: 100%;
   color: #fff;
 }
-</style>
+</style>@/stores/userStore

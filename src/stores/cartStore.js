@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
-import { useUserStore } from "./user";
-import { insertCartAPI, getNewCartListAPI } from "@/apis/cart";
+import { useUserStore } from "./userStore";
+import { deleteCartAPI, getNewCartListAPI, insertCartAPI } from "@/apis/cart";
 
 export const useCartStore = defineStore(
   "cart",
@@ -10,13 +10,18 @@ export const useCartStore = defineStore(
 
     const userStore = useUserStore();
     const isLogin = computed(() => userStore.userInfo.token);
+
+    const updateNewCartList = async () => {
+      const res = await getNewCartListAPI();
+      cartList.value = res.result;
+    };
+
     const addCart = async (goods) => {
       const { skuId, count } = goods;
       if (isLogin.value) {
         // 登陆时调用本地接口
         await insertCartAPI({ skuId, count });
-        const res = await getNewCartListAPI();
-        cartList.value = res.result;
+        updateNewCartList();
       } else {
         // 非登陆时操作本地
         const item = cartList.value.find((item) => item.skuId === goods.skuId);
@@ -28,13 +33,21 @@ export const useCartStore = defineStore(
       }
     };
 
-    const delCart = (skuId) => {
-      // 1. index + splice
-      const index = cartList.value.findIndex((item) => item.skuId === skuId);
-      cartList.value.splice(index, 1);
+    const delCart = async (skuId) => {
+      if (isLogin.value) {
+        // 登陆时调用本地接口
+        await deleteCartAPI([skuId]);
+        updateNewCartList();
+      } else {
+        // 非登陆时操作本地
 
-      // 2. filter
-      // cartList.value = cartList.value.filter((item) => item.skuId !== skuId)
+        // 1. index + splice
+        const index = cartList.value.findIndex((item) => item.skuId === skuId);
+        cartList.value.splice(index, 1);
+
+        // 2. filter
+        // cartList.value = cartList.value.filter((item) => item.skuId !== skuId)
+      }
     };
 
     const singleCheck = (skuId, selected) => {

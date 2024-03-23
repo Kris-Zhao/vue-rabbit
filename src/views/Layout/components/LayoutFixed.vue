@@ -1,14 +1,14 @@
 <script setup>
-  import {useScroll} from '@vueuse/core'
-  import { useCategoryStore } from '@/stores/category'
-  import {storeToRefs} from 'pinia'
+import { useScroll } from '@vueuse/core'
+import { useCategoryStore } from '@/stores/categoryStore'
+import { storeToRefs } from 'pinia'
 
-  let { y } = useScroll(window)
-  const {categoryList} = storeToRefs(useCategoryStore())
+let { y } = useScroll(window)
+const { categoryList } = storeToRefs(useCategoryStore())
 </script>
 
 <template>
-  <div class="app-header-sticky" :class="{show: y > 78}">
+  <div class="app-header-sticky" :class="{ show: y > 78 }">
     <div class="container">
       <RouterLink class="logo" to="/" />
       <!-- 导航区域 -->
@@ -114,4 +114,4 @@
     }
   }
 }
-</style>
+</style>@/stores/categoryStore
