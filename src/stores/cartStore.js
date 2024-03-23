@@ -11,7 +11,7 @@ export const useCartStore = defineStore(
     const userStore = useUserStore();
     const isLogin = computed(() => userStore.userInfo.token);
 
-    const updateNewCartList = async () => {
+    const updateCartList = async () => {
       const res = await getNewCartListAPI();
       cartList.value = res.result;
     };
@@ -21,7 +21,7 @@ export const useCartStore = defineStore(
       if (isLogin.value) {
         // 登陆时调用本地接口
         await insertCartAPI({ skuId, count });
-        updateNewCartList();
+        updateCartList();
       } else {
         // 非登陆时操作本地
         const item = cartList.value.find((item) => item.skuId === goods.skuId);
@@ -37,7 +37,7 @@ export const useCartStore = defineStore(
       if (isLogin.value) {
         // 登陆时调用本地接口
         await deleteCartAPI([skuId]);
-        updateNewCartList();
+        updateCartList();
       } else {
         // 非登陆时操作本地
 
@@ -104,7 +104,7 @@ export const useCartStore = defineStore(
       isAllChecked,
       totalSelectedItems,
       totalSelectedPrice,
-      updateNewCartList,
+      updateNewCartList: updateCartList,
       addCart,
       delCart,
       emptyCart,
