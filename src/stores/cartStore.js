@@ -50,6 +50,10 @@ export const useCartStore = defineStore(
       }
     };
 
+    const emptyCart = () => {
+      cartList.value = [];
+    };
+
     const singleCheck = (skuId, selected) => {
       const item = cartList.value.find((item) => item.skuId === skuId);
       item.selected = selected;
@@ -102,6 +106,7 @@ export const useCartStore = defineStore(
       totalSelectedPrice,
       addCart,
       delCart,
+      emptyCart,
       singleCheck,
       allCheck,
     };
