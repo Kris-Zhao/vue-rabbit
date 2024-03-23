@@ -19,7 +19,7 @@ const allCheck = (selected) => {
           <thead>
             <tr>
               <th width="120">
-                <el-checkbox :model-value="cartStore.isAllChecked" @change="allCheck"/>
+                <el-checkbox :model-value="cartStore.isAllChecked" @change="allCheck" />
               </th>
               <th width="400">商品信息</th>
               <th width="220">单价</th>
@@ -32,9 +32,9 @@ const allCheck = (selected) => {
           <tbody>
             <tr v-for="i in cartStore.cartList" :key="i.id">
               <td>
-                <el-checkbox :model-value="i.selected" @change="(selected) => singleCheck(i.skuId, selected )" />
+                <el-checkbox :model-value="i.selected" @change="(selected) => singleCheck(i.skuId, selected)" />
               </td>
-              <td> 
+              <td>
                 <div class="goods">
                   <RouterLink to="/"><img :src="i.picture" alt="" /></RouterLink>
                   <div>
@@ -55,7 +55,8 @@ const allCheck = (selected) => {
               </td>
               <td class="tc">
                 <p>
-                  <el-popconfirm title="确认删除吗?" confirm-button-text="确认" cancel-button-text="取消" @confirm="cartStore.delCart(i.skuId)">
+                  <el-popconfirm title="确认删除吗?" confirm-button-text="确认" cancel-button-text="取消"
+                    @confirm="cartStore.delCart(i.skuId)">
                     <template #reference>
                       <a href="javascript:;">删除</a>
                     </template>
@@ -83,7 +84,7 @@ const allCheck = (selected) => {
           <span class="red">¥ {{ cartStore.totalSelectedPrice.toFixed(2) }} </span>
         </div>
         <div class="total">
-          <el-button size="large" type="primary" >下单结算</el-button>
+          <el-button size="large" type="primary" @click="$router.push('/checkout')">下单结算</el-button>
         </div>
       </div>
     </div>
